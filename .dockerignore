@@ -1,6 +1,7 @@
-src/vendor
-src/node_modules
+api/vendor
+frontend/node_modules
+api/node_modules
 .git
 .idea
-src/.env
-src/tests
+api/.env
+api/tests
