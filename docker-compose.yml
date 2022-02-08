@@ -46,10 +46,10 @@ services:
                         - redisdata:/data
         # supervisor:
         #         build:
-        #                 context: .
+        #                 context: ./api
         #                 dockerfile: .docker/supervisord/Dockerfile
         #         volumes:
-        #                 - ./src:/var/www/html
+        #                 - ./:/var/www/html
 volumes:
         mysqldata:
         redisdata:
