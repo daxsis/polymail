@@ -1,7 +1,6 @@
 <?php
-// no routes in here this time
 
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +13,6 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
