@@ -81,7 +81,7 @@ RUN docker-php-ext-install exif
 RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
     && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ && docker-php-ext-install gd
 # Install PostgreSQL
-RUN apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_pgsql
+RUN apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_mysql
 # Install BC Math
 RUN docker-php-ext-install bcmath
 # Install internationalization functions
