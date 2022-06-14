@@ -7,7 +7,7 @@ services:
                         context: .
                 volumes:
                         - ./api/:/var/www/html
-                #hostname: api
+                # hostname: api
                 extra_hosts:
                         - "host.docker.internal:host-gateway"
                 ports:
@@ -21,7 +21,7 @@ services:
                         - ./.docker/nginx/snippets:/etc/nginx/snippets:ro
                         - ./.docker/nginx/default.conf:/etc/nginx/nginx.conf:ro
                 ports:
-                        - "80:80"
+                        - 80:80
         node:
                 image: node:lts
                 user: node
