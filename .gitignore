@@ -1,2 +1,6 @@
 .vscode
 .env
+mysqldata
+redisdata
+meilisearch
+supervisord.log
