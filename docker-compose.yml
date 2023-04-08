@@ -11,7 +11,8 @@ services:
                 extra_hosts:
                         - "host.docker.internal:host-gateway"
                 ports:
-                        - 9000:9000
+                        - "${PHP_PORT}:9000"
+
         web:
                 image: nginx:1.21-alpine
                 volumes:
@@ -21,26 +22,27 @@ services:
                         - ./.docker/nginx/snippets:/etc/nginx/snippets:ro
                         - ./.docker/nginx/default.conf:/etc/nginx/nginx.conf:ro
                 ports:
-                        - 80:80
+                        - "${WEB_PORT}:80"
+
         node:
                 image: node:lts
                 user: node
                 working_dir: /assets
                 environment:
                         - HOST=0.0.0.0
-                        - PORT=3000
+                        - PORT=${NODE_PORT}
                 volumes:
                         - ./frontend:/assets
                 command: npm run dev
                 ports:
-                        - 3000:3000
+                        - "${NODE_PORT}:3000"
 
         db:
                 image: mariadb:10.6
                 volumes:
-                        - mysqldata:/var/lib/mysql
+                        - ./mysqldata:/var/lib/mysql
                 ports:
-                        - 4306:3306
+                        - "${DB_PORT}:3306"
                 environment:
                         MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
                         MYSQL_DATABASE: "${DB_DATABASE}"
@@ -49,20 +51,28 @@ services:
         redis:
                 image: redis
                 volumes:
-                        - redisdata:/data
-        # supervisor:
-        #         build:
-        #                 context: ./api
-        #                 dockerfile: .docker/supervisord/Dockerfile
-        #         volumes:
-        #                 - ./:/var/www/html
+                        - ./redisdata:/data
+        supervisor:
+                build:
+                        context: ./
+                        dockerfile: .docker/supervisord/Dockerfile
+                volumes:
+                        - ./api:/var/www/html
 
         mailgoh:
                 image: mailhog/mailhog:latest
                 ports:
-                        - 1025:1025
-                        - 8025:8025
+                        - "${MAILHOG_SMTP_PORT}:1025"
+                        - "${MAILHOG_HTTP_PORT}:8025"
+
+        meilisearch:
+                image: getmeili/meilisearch:latest
+                volumes:
+                        - ./meilisearch:/meili_data
+                ports: 
+                        - "${MEILISEARCH_PORT}:7700"
+        
                 
-volumes:
-        mysqldata:
-        redisdata:
+# volumes:
+#         mysqldata:
+#         redisdata:
