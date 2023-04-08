@@ -65,7 +65,7 @@
 
 
 # Serving image
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # Update dependencies
 RUN apt-get update
@@ -101,7 +101,7 @@ RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 # Clean up the apt and pecl cache
 RUN rm -rf /var/lib/apt/lists/* \
-	&& rm -rf /tmp/pear
+    && rm -rf /tmp/pear
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
@@ -112,9 +112,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY ./.docker/php/conf.d "/${PHP_INI_DIR}/conf.d"
 
 RUN groupadd --gid 1000 appuser \ 
-	&& useradd --uid 1000 -g appuser \
-	-G www-data,root --shell /bin/bash \
-	--create-home appuser
+    && useradd --uid 1000 -g appuser \
+    -G www-data,root --shell /bin/bash \
+    --create-home appuser
 
 USER appuser
 
